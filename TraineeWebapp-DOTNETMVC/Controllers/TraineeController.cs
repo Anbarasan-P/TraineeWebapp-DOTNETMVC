@@ -1,4 +1,6 @@
 ﻿//using TraineeWebapp_DOTNETMVC;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using TraineeWebapp_DOTNETMVC.Models;
 
@@ -24,14 +26,23 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Trainee trainee)
+        public ActionResult Create(Trainee trainee, HttpPostedFileBase PhotoUpload)
         {
+            if (PhotoUpload != null && PhotoUpload.ContentLength > 0)
+            {
+                using (var binaryReader = new BinaryReader(PhotoUpload.InputStream))
+                {
+                    trainee.Photo = binaryReader.ReadBytes(PhotoUpload.ContentLength);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 dal.InsertTrainee(trainee);
                 return RedirectToAction("Index");
             }
-            return View();
+
+            return View(trainee);
         }
 
         public ActionResult Edit(int id)
@@ -40,14 +51,23 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Trainee trainee)
+        public ActionResult Edit(Trainee trainee, HttpPostedFileBase PhotoUpload)
         {
+            if (PhotoUpload != null && PhotoUpload.ContentLength > 0)
+            {
+                using (var binaryReader = new BinaryReader(PhotoUpload.InputStream))
+                {
+                    trainee.Photo = binaryReader.ReadBytes(PhotoUpload.ContentLength);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 dal.UpdateTrainee(trainee);
                 return RedirectToAction("Index");
             }
-            return View();
+
+            return View(trainee);
         }
 
         public ActionResult Delete(int id)
