@@ -26,7 +26,19 @@
         <dt>Gender</dt>
         <dd>@Model.Gender</dd>
 
-        @*<dt></dt>*@
+        <dt>Photo</dt>
+        <dd>
+            @if (Model.Photo != null)
+            {
+                var base64 = Convert.ToBase64String(Model.Photo);
+                var imgSource = String.Format("data:image/jpg;base64,{0}", base64);
+                <img src="@imgSource" width="150" height="150" />
+            }
+            else
+            {
+                <p>No photo available</p>
+            }
+        </dd>
     </dl>
 </div>
 <p>

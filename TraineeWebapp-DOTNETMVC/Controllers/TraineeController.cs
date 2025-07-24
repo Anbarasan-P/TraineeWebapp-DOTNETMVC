@@ -1,5 +1,4 @@
-﻿//using TraineeWebapp_DOTNETMVC;
-using System.IO;
+﻿using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using TraineeWebapp_DOTNETMVC.Models;
@@ -8,16 +7,16 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
 {
     public class TraineeController : Controller
     {
-        TraineeDAL dal = new TraineeDAL();
+        TraineeDAL dataAccessLayer = new TraineeDAL();
 
         public ActionResult Index()
         {
-            return View(dal.GetAllTrainees());
+            return View(dataAccessLayer.GetAllTrainees());
         }
 
         public ActionResult Details(int id)
         {
-            return View(dal.GetTrainee(id));
+            return View(dataAccessLayer.GetTrainee(id));
         }
 
         public ActionResult Create()
@@ -38,7 +37,7 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
 
             if (ModelState.IsValid)
             {
-                dal.InsertTrainee(trainee);
+                dataAccessLayer.InsertTrainee(trainee);
                 return RedirectToAction("Index");
             }
 
@@ -47,7 +46,7 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(dal.GetTrainee(id));
+            return View(dataAccessLayer.GetTrainee(id));
         }
 
         [HttpPost]
@@ -63,7 +62,7 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
 
             if (ModelState.IsValid)
             {
-                dal.UpdateTrainee(trainee);
+                dataAccessLayer.UpdateTrainee(trainee);
                 return RedirectToAction("Index");
             }
 
@@ -72,13 +71,13 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View(dal.GetTrainee(id));
+            return View(dataAccessLayer.GetTrainee(id));
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            dal.DeleteTrainee(id);
+            dataAccessLayer.DeleteTrainee(id);
             return RedirectToAction("Index");
         }
     }
