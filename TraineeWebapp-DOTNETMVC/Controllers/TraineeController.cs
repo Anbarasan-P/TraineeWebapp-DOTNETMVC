@@ -1,7 +1,6 @@
-﻿using System.Web.Mvc;
+﻿//using TraineeWebapp_DOTNETMVC;
+using System.Web.Mvc;
 using TraineeWebapp_DOTNETMVC.Models;
-
-
 
 namespace TraineeWebapp_DOTNETMVC.Controllers
 {
@@ -16,7 +15,7 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(dal.GetTraineeById(id));
+            return View(dal.GetTrainee(id));
         }
 
         public ActionResult Create()
@@ -37,7 +36,7 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(dal.GetTraineeById(id));
+            return View(dal.GetTrainee(id));
         }
 
         [HttpPost]
@@ -53,7 +52,7 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View(dal.GetTraineeById(id));
+            return View(dal.GetTrainee(id));
         }
 
         [HttpPost, ActionName("Delete")]

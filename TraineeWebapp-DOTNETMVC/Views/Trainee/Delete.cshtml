@@ -21,11 +21,10 @@
     </dl>
 
     @using (Html.BeginForm("DeleteConfirmed", "Trainee", FormMethod.Post))
-    {
+     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.TraineeID)
         <input type="submit" value="Delete" class="btn btn-danger" />
         @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
-    }
+     }
 </div>
-
