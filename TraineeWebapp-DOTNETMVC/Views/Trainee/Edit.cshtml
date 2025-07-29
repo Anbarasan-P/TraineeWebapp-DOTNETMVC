@@ -6,53 +6,70 @@
 
 <h2>Edit Trainee</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Trainee", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(map => map.TraineeID)
+    @Html.HiddenFor(m => m.TraineeID)
 
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(map => map.Name)
-            @Html.TextBoxFor(map => map.Name, new { @class = "form-control" })
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.Email)
-            @Html.TextBoxFor(map => map.Email, new { @class = "form-control" })
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber)
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.PhoneNumber)
-            @Html.TextBoxFor(map => map.PhoneNumber, new { @class = "form-control" })
+            @Html.LabelFor(m => m.Department)
+            @Html.TextBoxFor(m => m.Department, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Department, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.Department)
-            @Html.TextBoxFor(map => map.Department, new { @class = "form-control" })
+            @Html.LabelFor(m => m.JoiningDate)
+            @Html.TextBoxFor(m => m.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(m => m.JoiningDate, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.JoiningDate)
-            @Html.TextBoxFor(map => map.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(map => map.Gender)
-            @Html.DropDownListFor(map => map.Gender, new List<SelectListItem> {
+            @Html.LabelFor(m => m.Gender)
+            @Html.DropDownListFor(m => m.Gender, new List<SelectListItem>
+            {
                 new SelectListItem { Text = "Male", Value = "Male" },
                 new SelectListItem { Text = "Female", Value = "Female" },
                 new SelectListItem { Text = "Other", Value = "Other" }
             }, "Select Gender", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            <label>Change Photo</label>
-            <input type="file" name="PhotoUpload" class="form-control" accept="image/*" />
+            <label>Upload New Photo</label>
+            <input type="file" name="PhotoFile" class="form-control" accept="image/*" />
         </div>
+
+        @if (Model.Photo != null)
+        {
+            string imageBase64 = Convert.ToBase64String(Model.Photo);
+            string imageSrc = string.Format("data:image/png;base64,{0}", imageBase64);
+            <div class="form-group">
+                <label>Current Photo</label><br />
+                <img src="@imageSrc" alt="Photo" style="max-width:200px; max-height:200px;" />
+            </div>
+        }
 
         <br />
         <input type="submit" value="Save" class="btn btn-primary" />
