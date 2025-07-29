@@ -57,11 +57,11 @@ namespace TraineeWebapp_DOTNETMVC.Models
 
                 if (trainee.Photo != null)
                 {
-                    command.Parameters.AddWithValue("@Photo", trainee.Photo);
+                    command.Parameters.AddWithValue("@Photo", SqlDbType.VarBinary).Value = trainee.Photo;
                 }
                 else
                 {
-                    command.Parameters.AddWithValue("@Photo", DBNull.Value);
+                    command.Parameters.AddWithValue("@Photo", SqlDbType.VarBinary).Value = DBNull.Value;
                 }
 
                 connection.Open();  

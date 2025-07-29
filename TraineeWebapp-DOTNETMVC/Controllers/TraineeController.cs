@@ -25,22 +25,24 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Trainee trainee, HttpPostedFileBase PhotoUpload)
+        public ActionResult Create(Trainee trainee, HttpPostedFileBase PhotoFile)
         {
-            if (PhotoUpload != null && PhotoUpload.ContentLength > 0)
-            {
-                using (var binaryReader = new BinaryReader(PhotoUpload.InputStream))
-                {
-                    trainee.Photo = binaryReader.ReadBytes(PhotoUpload.ContentLength);
-                }
-            }
-
             if (ModelState.IsValid)
             {
+                if (PhotoFile != null && PhotoFile.ContentLength > 0)
+                {
+                    using (var binaryReader = new BinaryReader(PhotoFile.InputStream))
+                    {
+                        trainee.Photo = binaryReader.ReadBytes(PhotoFile.ContentLength);
+                    }
+                }
+                else {
+                    trainee.Photo = null; // Handle case where no photo is uploaded
+
+                }
                 dataAccessLayer.InsertTrainee(trainee);
                 return RedirectToAction("Index");
             }
-
             return View(trainee);
         }
 
@@ -49,23 +51,26 @@ namespace TraineeWebapp_DOTNETMVC.Controllers
             return View(dataAccessLayer.GetTrainee(id));
         }
 
-        [HttpPost]
-        public ActionResult Edit(Trainee trainee, HttpPostedFileBase PhotoUpload)
+        public ActionResult Edit(Trainee trainee, HttpPostedFileBase PhotoFile)
         {
-            if (PhotoUpload != null && PhotoUpload.ContentLength > 0)
-            {
-                using (var binaryReader = new BinaryReader(PhotoUpload.InputStream))
-                {
-                    trainee.Photo = binaryReader.ReadBytes(PhotoUpload.ContentLength);
-                }
-            }
-
             if (ModelState.IsValid)
             {
+                if (PhotoFile != null && PhotoFile.ContentLength > 0)
+                {
+                    using (var binaryReader = new BinaryReader(PhotoFile.InputStream))
+                    {
+                        trainee.Photo = binaryReader.ReadBytes(PhotoFile.ContentLength);
+                    }
+                }
+                else
+                {
+            
+                    var existingTrainee = dataAccessLayer.GetTrainee(trainee.TraineeID);
+                    trainee.Photo = existingTrainee.Photo;
+                }
                 dataAccessLayer.UpdateTrainee(trainee);
                 return RedirectToAction("Index");
             }
-
             return View(trainee);
         }
 
