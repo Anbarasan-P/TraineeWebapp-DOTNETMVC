@@ -20,7 +20,7 @@
         <dd>@Model.JoiningDate.ToShortDateString()</dd>
     </dl>
 
-    @using (Html.BeginForm("DeleteConfirmed", "Trainee", FormMethod.Post))
+    @using (Html.BeginForm("Delete", "Trainee", FormMethod.Post))
      {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(map => map.TraineeID)
