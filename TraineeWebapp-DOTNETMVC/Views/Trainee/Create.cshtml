@@ -6,55 +6,60 @@
 
 <h2>Create Trainee</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(map => map.TraineeID)
 
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(map => map.Name)
-            @Html.TextBoxFor(map => map.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(map => map.Name, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.Email)
-            @Html.TextBoxFor(map => map.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(map => map.Email, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.PhoneNumber)
-            @Html.TextBoxFor(map => map.PhoneNumber, new { @class = "form-control" })
-            @Html.ValidationMessageFor(map => map.PhoneNumber, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.PhoneNumber)
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.Department)
-            @Html.TextBoxFor(map => map.Department, new { @class = "form-control" })
+            @Html.LabelFor(m => m.Department)
+            @Html.TextBoxFor(m => m.Department, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Department, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.JoiningDate)
-            @Html.TextBoxFor(map => map.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.LabelFor(m => m.JoiningDate)
+            @Html.TextBoxFor(m => m.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(m => m.JoiningDate, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(map => map.Gender)
-            @Html.DropDownListFor(map => map.Gender, new List<SelectListItem> {
-                new SelectListItem { Text = "Male", Value = "Male" },
-                new SelectListItem { Text = "Female", Value = "Female" },
-                new SelectListItem { Text = "Other", Value = "Other" }
-            }, "Select Gender", new { @class = "form-control" })
+            @Html.LabelFor(m => m.Gender)
+            @Html.DropDownListFor(m => m.Gender, new SelectList(
+                new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Select Gender", Value = "" },
+                    new SelectListItem { Text = "Male", Value = "Male" },
+                    new SelectListItem { Text = "Female", Value = "Female" },
+                    new SelectListItem { Text = "Other", Value = "Other" }
+                }, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            <label>Upload Photo</label>
-            <input type="file" name="PhotoUpload" class="form-control" accept="image/*" />
+            <label for="PhotoFile">Upload Photo</label>
+            <input type="file" name="PhotoFile" id="PhotoFile" class="form-control" accept="image/*" />
         </div>
 
         <br />
