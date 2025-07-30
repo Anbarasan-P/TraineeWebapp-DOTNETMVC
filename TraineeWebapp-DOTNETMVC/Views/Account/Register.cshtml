@@ -1,0 +1,107 @@
+﻿@model TraineeWebapp_DOTNETMVC.Models.Trainee
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .form-label {
+        font-weight: 500;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Register</h3>
+
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3 row align-items-center">
+                            @Html.LabelFor(map => map.Name, new { @class = "col-sm-4 col-form-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(map => map.Name, new { @class = "form-control", placeholder = "Full Name" })
+                                @Html.ValidationMessageFor(map => map.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row align-items-center">
+                            @Html.LabelFor(map => map.Email, new { @class = "col-sm-4 col-form-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(map => map.Email, new { @class = "form-control", placeholder = "Email Address" })
+                                @Html.ValidationMessageFor(map => map.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row align-items-center">
+                            <label class="col-sm-4 col-form-label">Password</label>
+                            <div class="col-sm-8">
+                                <input type="password" name="Password" class="form-control" placeholder="Enter password" required />
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row align-items-center">
+                            @Html.LabelFor(map => map.PhoneNumber, new { @class = "col-sm-4 col-form-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(map => map.PhoneNumber, new { @class = "form-control", placeholder = "Phone Number" })
+                                @Html.ValidationMessageFor(map => map.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row align-items-center">
+                            @Html.LabelFor(map => map.Department, new { @class = "col-sm-4 col-form-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(map => map.Department, new { @class = "form-control", placeholder = "Department" })
+                                @Html.ValidationMessageFor(map => map.Department, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row align-items-center">
+                            @Html.LabelFor(map => map.JoiningDate, new { @class = "col-sm-4 col-form-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(map => map.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                @Html.ValidationMessageFor(map => map.JoiningDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row align-items-center">
+                            @Html.LabelFor(map => map.Gender, new { @class = "col-sm-4 col-form-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(map => map.Gender,
+                                new SelectList(new[]
+                                {
+                                    new { Value = "", Text = "-- Select Gender --" },
+                                    new { Value = "Male", Text = "Male" },
+                                    new { Value = "Female", Text = "Female" },
+                                    new { Value = "Other", Text = "Other" }
+                                }, "Value", "Text"),
+                                new { @class = "form-select" })
+                                @Html.ValidationMessageFor(map => map.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row align-items-center">
+                            <label class="col-sm-4 col-form-label">Upload Photo</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="PhotoFile" class="form-control" accept="image/*" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-success w-100">Register</button>
+                        </div>
+                    }
+
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a href="@Url.Action("Login", "Account")">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
