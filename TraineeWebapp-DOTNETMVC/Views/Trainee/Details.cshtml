@@ -1,49 +1,139 @@
 ﻿@model TraineeWebapp_DOTNETMVC.Models.Trainee
 
-@{ 
-    ViewBag.Title = "Trainee Details";
-}
+<style>
+    .details-card {
+        max-width: 520px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+        display: flex;
+        overflow: hidden;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-<h2>Trainee Details</h2>
+    .details-photo {
+        flex: 0 0 160px;
+        background: #f8f8f8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>Name</dt>
-        <dd>@Model.Name</dd>
+        .details-photo img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
 
-        <dt>Email</dt>
-        <dd>@Model.Email</dd>
+    .details-info {
+        flex: 1;
+        padding: 24px;
+    }
 
-        <dt>Phone Number</dt>
-        <dd>@Model.PhoneNumber</dd>
+    .details-fields {
+        display: table;
+        width: 100%;
+        margin-bottom: 18px;
+    }
 
-        <dt>Deptartment</dt>
-        <dd>@Model.Department</dd>
+    .details-field-row {
+        display: table-row;
+    }
 
-        <dt>Joining Date</dt>
-        <dd>@Model.JoiningDate</dd>
+    .details-label, .details-value {
+        display: table-cell;
+        padding: 9px 0;
+        font-size: 1.08rem;
+        vertical-align: middle;
+    }
 
-        <dt>Gender</dt>
-        <dd>@Model.Gender</dd>
+    .details-label {
+        font-weight: 600;
+        color: #444;
+        width: 120px;
+        padding-right: 24px;
+        white-space: nowrap;
+    }
 
-        <dt>Photo</dt>
-        <dd>
-            @if (Model.Photo != null)
-            {
-                var base64 = Convert.ToBase64String(Model.Photo);
-                var imgSource = String.Format("data:image/jpg;base64,{0}", base64);
-                <img src="@imgSource" width="150" height="150" />
-            }
-            else
-            {
-                <p>No photo available</p>
-            }
-        </dd>
-    </dl>
+    .details-value {
+        color: #181818;
+        font-weight: 400;
+        max-width: 260px;
+        overflow-wrap: anywhere;
+    }
+
+    .details-actions {
+        margin-top: 18px;
+    }
+
+    .details-btn {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 24px;
+        text-decoration: none;
+        font-size: 1rem;
+        color: #fff;
+        font-weight: 500;
+        margin-right: 12px;
+        transition: background .15s;
+        background: #2979ff;
+        border: none;
+        cursor: pointer;
+    }
+
+        .details-btn.secondary {
+            background: #868686;
+        }
+</style>
+
+<h2 style="text-align:center;">Trainee Details</h2>
+<div class="details-card">
+    <div class="details-photo">
+        @if (Model.Photo != null)
+        {
+            var base64 = Convert.ToBase64String(Model.Photo);
+            var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+            <img src="@imgSrc" />
+        }
+        else
+        {
+            <span style="color: #888; text-align:center;">No photo</span>
+        }
+    </div>
+    <div class="details-info">
+        <div class="details-fields">
+            <div class="details-field-row">
+                <div class="details-label">Name</div>
+                <div class="details-value">@Model.Name</div>
+            </div>
+            <div class="details-field-row">
+                <div class="details-label">Email</div>
+                <div class="details-value">@Model.Email</div>
+            </div>
+            <div class="details-field-row">
+                <div class="details-label">Phone</div>
+                <div class="details-value">@Model.PhoneNumber</div>
+            </div>
+            <div class="details-field-row">
+                <div class="details-label">Department</div>
+                <div class="details-value">@Model.Department</div>
+            </div>
+            <div class="details-field-row">
+                <div class="details-label">Joining Date</div>
+                <div class="details-value">@Model.JoiningDate.ToShortDateString()</div>
+            </div>
+            <div class="details-field-row">
+                <div class="details-label">Gender</div>
+                <div class="details-value">@Model.Gender</div>
+            </div>
+        </div>
+        <div class="details-actions">
+            `
+            @Html.ActionLink("Edit", "Edit", new { id = Model.TraineeID }, new { @class = "details-btn" })
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "details-btn secondary" })
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TraineeID }, new { @class = "btn btn-primary" }) |
-    @Html.ActionLink("Back to list", "Index", null, new{@class = "btn btn-secondary"})
-</p>
-
-

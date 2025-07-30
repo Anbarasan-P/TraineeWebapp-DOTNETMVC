@@ -2,77 +2,126 @@
 
 @{
     ViewBag.Title = "Edit Trainee";
+    string imgSource = null;
+    if (Model.Photo != null)
+    {
+        var base64 = Convert.ToBase64String(Model.Photo);
+        imgSource = $"data:image/png;base64,{base64}";
+    }
 }
 
-<h2>Edit Trainee</h2>
+<div class="container mt-5" style="max-width:460px">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow border-0 p-4">
+                <div class="card-body">
+                    <h3 class="mb-4 text-primary fw-bold text-center">Edit Trainee</h3>
 
-@using (Html.BeginForm("Edit", "Trainee", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.TraineeID)
+                    <div class="mb-4 text-center">
+                        @if (Model.Photo != null)
+                        {
+                            <img src="@imgSource"
+                                 class="rounded-circle border"
+                                 style="width:100px;height:100px;object-fit:cover;" alt="Photo" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">No photo</span>
+                        }
+                    </div>
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @using (Html.BeginForm("Edit", "Trainee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(map => map.TraineeID)
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger text-center" })
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name)
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-        </div>
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4">
+                                @Html.LabelFor(map => map.Name, htmlAttributes: new { @class = "form-label mb-0" })
+                            </div>
+                            <div class="col-8">
+                                @Html.TextBoxFor(map => map.Name, new { @class = "form-control fw-bold", placeholder = "Full Name" })
+                                @Html.ValidationMessageFor(map => map.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email)
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(m => m.PhoneNumber)
-            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-        </div>
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4">
+                                @Html.LabelFor(map => map.Email, htmlAttributes: new { @class = "form-label mb-0" })
+                            </div>
+                            <div class="col-8">
+                                @Html.TextBoxFor(map => map.Email, new { @class = "form-control", placeholder = "Email" })
+                                @Html.ValidationMessageFor(map => map.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Department)
-            @Html.TextBoxFor(m => m.Department, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Department, "", new { @class = "text-danger" })
-        </div>
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4">
+                                @Html.LabelFor(map => map.PhoneNumber, htmlAttributes: new { @class = "form-label mb-0" })
+                            </div>
+                            <div class="col-8">
+                                @Html.TextBoxFor(map => map.PhoneNumber, new { @class = "form-control", placeholder = "Phone Number" })
+                                @Html.ValidationMessageFor(map => map.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.JoiningDate)
-            @Html.TextBoxFor(m => m.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-            @Html.ValidationMessageFor(m => m.JoiningDate, "", new { @class = "text-danger" })
-        </div>
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4">
+                                @Html.LabelFor(map => map.Department, htmlAttributes: new { @class = "form-label mb-0" })
+                            </div>
+                            <div class="col-8">
+                                @Html.TextBoxFor(map => map.Department, new { @class = "form-control", placeholder = "Department" })
+                                @Html.ValidationMessageFor(map => map.Department, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Gender)
-            @Html.DropDownListFor(m => m.Gender, new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Male", Value = "Male" },
-                new SelectListItem { Text = "Female", Value = "Female" },
-                new SelectListItem { Text = "Other", Value = "Other" }
-            }, "Select Gender", new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
-        </div>
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4">
+                                @Html.LabelFor(map => map.JoiningDate, htmlAttributes: new { @class = "form-label mb-0" })
+                            </div>
+                            <div class="col-8">
+                                @Html.TextBoxFor(map => map.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                                @Html.ValidationMessageFor(map => map.JoiningDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            <label>Upload New Photo</label>
-            <input type="file" name="PhotoFile" class="form-control" accept="image/*" />
-        </div>
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-4">
+                                @Html.LabelFor(map => map.Gender, htmlAttributes: new { @class = "form-label mb-0" })
+                            </div>
+                            <div class="col-8">
+                                @Html.DropDownListFor(
+                                    m => m.Gender,
+                                    new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Text = "Male", Value = "Male" },
+                                        new SelectListItem { Text = "Female", Value = "Female" },
+                                        new SelectListItem { Text = "Other", Value = "Other" }
+                                    },
+                                    "Select Gender",
+                                    new { @class = "form-select" }
+                                )
+                                @Html.ValidationMessageFor(map => map.Gender, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        @if (Model.Photo != null)
-        {
-            string imageBase64 = Convert.ToBase64String(Model.Photo);
-            string imageSrc = string.Format("data:image/png;base64,{0}", imageBase64);
-            <div class="form-group">
-                <label>Current Photo</label><br />
-                <img src="@imageSrc" alt="Photo" style="max-width:200px; max-height:200px;" />
+                        <div class="row mb-4 align-items-center">
+                            <div class="col-4">
+                                <label class="form-label mb-0">Upload Photo</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="file" name="PhotoFile" class="form-control" accept="image/*" />
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="submit" class="btn btn-primary px-4">Save</button>
+                            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary px-4" })
+                        </div>
+                    }
+                </div>
             </div>
-        }
-
-        <br />
-        <input type="submit" value="Save" class="btn btn-primary" />
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
     </div>
-}
+</div>

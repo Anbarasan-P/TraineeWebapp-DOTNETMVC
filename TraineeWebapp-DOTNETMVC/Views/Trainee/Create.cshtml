@@ -4,66 +4,116 @@
     ViewBag.Title = "Create New Trainee";
 }
 
-<h2>Create Trainee</h2>
+<div class="container" style="max-width: 480px;">
+    <div class="card shadow-sm mt-5 border-0 rounded-4">
+        <div class="card-body p-4">
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+            <h2 class="card-title mb-4 fw-bold text-center w-100">Create Trainee</h2>
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger py-1 px-2" })
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="mb-3 row align-items-center">
+                    <div class="col-4">
+                        @Html.LabelFor(map => map.Name, htmlAttributes: new { @class = "form-label mb-0 fw-semibold" })
+                    </div>
+                    <div class="col-8">
+                        @Html.TextBoxFor(map => map.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(map => map.Name, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name)
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                <div class="mb-3 row align-items-center">
+                    <div class="col-4">
+                        @Html.LabelFor(map => map.Email, htmlAttributes: new { @class = "form-label mb-0 fw-semibold" })
+                    </div>
+                    <div class="col-8">
+                        @Html.TextBoxFor(map => map.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(map => map.Email, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <div class="mb-3 row align-items-center">
+                    <div class="col-4">
+                        @Html.LabelFor(map => map.PhoneNumber, htmlAttributes: new { @class = "form-label mb-0 fw-semibold" })
+                    </div>
+                    <div class="col-8">
+                        @Html.TextBoxFor(map => map.PhoneNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(map => map.PhoneNumber, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <div class="mb-3 row align-items-center">
+                    <div class="col-4">
+                        @Html.LabelFor(map => map.Department, htmlAttributes: new { @class = "form-label mb-0 fw-semibold" })
+                    </div>
+                    <div class="col-8">
+                        @Html.TextBoxFor(map => map.Department, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(map => map.Department, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <div class="mb-3 row align-items-center">
+                    <div class="col-4">
+                        @Html.LabelFor(map => map.JoiningDate, htmlAttributes: new { @class = "form-label mb-0 fw-semibold" })
+                    </div>
+                    <div class="col-8">
+                        @Html.TextBoxFor(map => map.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                        @Html.ValidationMessageFor(map => map.JoiningDate, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <div class="mb-3 row align-items-center">
+                    <div class="col-4">
+                        @Html.LabelFor(map => map.Gender, htmlAttributes: new { @class = "form-label mb-0 fw-semibold" })
+                    </div>
+                    <div class="col-8">
+                        @Html.DropDownListFor(map => map.Gender, new SelectList(
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "Select Gender", Value = string.Empty },
+                                new SelectListItem { Text = "Male", Value = "Male" },
+                                new SelectListItem { Text = "Female", Value = "Female" },
+                                new SelectListItem { Text = "Other", Value = "Other" }
+                            }, "Value", "Text"), new { @class = "form-select" })
+                        @Html.ValidationMessageFor(map => map.Gender, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+
+                <!-- Photo Upload and Preview: you may keep this "stacked" for best look -->
+                <div class="mb-4 row align-items-start">
+                    <div class="col-4">
+                        <label for="PhotoFile" class="form-label fw-semibold">Upload Photo</label>
+                    </div>
+                    <div class="col-8 d-flex flex-column align-items-center">
+                        <input type="file" name="PhotoFile" id="PhotoFile" class="form-control " accept="image/*" />
+                        <div id="photo-preview-holder"
+                             style="margin-top:18px; width:140px;height:140px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:#f3f3f3;overflow:hidden;">
+                            <img id="photo-preview-img" src="https://via.placeholder.com/140x140?text=Photo"
+                                 style="width:140px;height:140px;object-fit:cover;border-radius:14px;" alt="Photo Preview" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid mt-4 gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg fw-bold">Create</button>
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-secondary" })
+                </div>
+            }
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email)
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.PhoneNumber)
-            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Department)
-            @Html.TextBoxFor(m => m.Department, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Department, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.JoiningDate)
-            @Html.TextBoxFor(m => m.JoiningDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-            @Html.ValidationMessageFor(m => m.JoiningDate, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Gender)
-            @Html.DropDownListFor(m => m.Gender, new SelectList(
-                new List<SelectListItem>
-                {
-                    new SelectListItem { Text = "Select Gender", Value = "" },
-                    new SelectListItem { Text = "Male", Value = "Male" },
-                    new SelectListItem { Text = "Female", Value = "Female" },
-                    new SelectListItem { Text = "Other", Value = "Other" }
-                }, "Value", "Text"), new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            <label for="PhotoFile">Upload Photo</label>
-            <input type="file" name="PhotoFile" id="PhotoFile" class="form-control" accept="image/*" />
-        </div>
-
-        <br />
-        <input type="submit" value="Create" class="btn btn-success" />
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
     </div>
-}
+</div>
+
+<script>
+    document.getElementById("PhotoFile").addEventListener("change", function (e) {
+        var file = e.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (ev) {
+                document.getElementById("photo-preview-img").src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
