@@ -27,5 +27,10 @@ namespace TraineeWebapp_DOTNETMVC.Models
         public string Gender { get; set; }
 
         public byte[] Photo { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
     }
+
 }
